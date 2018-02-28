@@ -1,8 +1,8 @@
-package it.ing.sw;
+package it.ing.sw.v2;
 
 import java.io.Serializable;
-
 import java.time.DateTimeException;
+import it.ing.sw.*;
 import java.time.*;
 
 /**
@@ -31,7 +31,7 @@ public class GestoreMenu implements Serializable
 	public static final String INTESTAZIONE_E = "ACCESSO OPERATORE";
 	public static final String [] OPZIONI_E = {"Inserisci username e password", "Indietro"};
 	public static final String INTESTAZIONE_F = "COSA DESIDERI FARE?";
-	public static final String [] OPZIONI_F = {"Visualizza anagrafica fruitori", "Visualizza elenco risorse", "Aggiungi risorsa", "Rimuovi risorsa", "Logout"};
+	public static final String [] OPZIONI_F = {"Visualizza anagrafica fruitori", "Visualizza archivio", "Aggiungi risorsa", "Rimuovi risorsa", "Logout"};
 	
     public static final String INS_NOME = "Inserisci il tuo nome: ";
     public static final String INS_COGNOME = "Inserisci il tuo cognome: ";
@@ -58,7 +58,19 @@ public class GestoreMenu implements Serializable
 	public static final String RICHIESTA_PROSECUZIONE = "Si desidera riprovare? (S/N)\n";
 	public static final String ERRORE = "Si e' verificato un errore\n";
 
-	/**
+    public static final String INS_NOME_C = "Inserisci il nome della categoria a cui aggiungere la risorsa:\n";
+	public static final String INS_SUCCESSO = "L'inserimento è avvenuto con successo\n";
+    public static final String RISORSA_PRESENTE = "Attenzione! La risorsa è già presente nell'archivio";
+    public static final String INS_IN_SOTTO = "La categoria %s presenta queste sottocategorie:\n%s";
+    public static final String INS_COMUNQUE = "Vuoi inserire la risorsa in una sottocategoria (S/N)\n";
+    public static final String INS_NUMERO_SOTTOC =  "Inserisci il numero della sottocategoria a cui aggiungere la risorsa:\n";
+    public static final String INS_NON_VALIDO = "Il nome della categoria inserita non è presente in archivio\n";
+    public static final String INS_NOME_SOTTOC = "Inserisci il nome della sottocategoria a cui aggiungere la risorsa:\n";
+    
+    
+    
+    
+    /**
 	 * Metodo per l'aggiunta di un nuovo fruitore all'elenco dei fruitori gia' presenti all'interno di af.
 	 * Vengono effettuati dei controlli sulla correttezza della data di nascita inserita e sulla possibile presenza di fruitori gia' iscritti in possesso delle medesime credenziali indicate
 	 * 
@@ -119,7 +131,7 @@ public class GestoreMenu implements Serializable
 	    	}
 	    	
 			Fruitore f = null;	
-			boolean exc = true;			
+			boolean exc = false;			
 			end = true;
 			
 			/**
@@ -127,7 +139,7 @@ public class GestoreMenu implements Serializable
 			 * Nel caso in cui quest'ultima generi un'eccezione, e dunque la data inserita non sia lessicalmente corretta, viene modificata un'opportuna
 			 * variabile booleana che impedisce la fuoriuscita dal ciclo do-while fintanto che non viene digitata una data valida
 			 */
-			while(exc) {
+			while(!exc) {
 			
 				try 
 				{
@@ -140,7 +152,7 @@ public class GestoreMenu implements Serializable
 					
 					f = new Fruitore(nome, cognome, anno, mese, giorno, use, pwd);
 					
-					exc = false;
+					exc = true;
 				}
 				catch(DateTimeException e)
 				{
@@ -256,28 +268,96 @@ public class GestoreMenu implements Serializable
 	}
     
     /**
+    * Metodo per l'aggiunta di una risorsa ad una (sotto)categoria dell'archivio
+    * 
+    * Pre: (op != null) && (arc != null)
+    * 
+    * @param op: l'operatore che effettua l'aggiunta della risorsa
+    * @param arc: l'archivio a cui aggiungere la risorsa
+    */
+    public void aggiungiRisorsa(Operatore op, Archivio arc)
+    {
+    	     Libro nuovol = null;
+    	     SottoCategoria sc = null;
+    	
+    	     String n = InputDati.leggiStringaNonVuota(INS_NOME_C);
+    	    	       
+    	    	 if(arc.verificaPresenzaCategoria(n))
+    	    	 {
+    	    	    	  Categoria c = arc.getCategoria(n);
+    	    	    	       
+    	    	    	  if(c.getElencoSottoCategorie() == null)
+    	    	    	  {
+    	    	    	    	   if(n.equalsIgnoreCase("Libri")) //forse caso inutile perchè nel main abbiamo messo delle sottocategorie alla categoria Libro
+    	    	    	    	   {
+    	    	    	    	    	    nuovol = InserimentoRisorsa.inserisciLibro();
+    	    	    	    	    	    
+    	    	    	    	    	    if((c.getRisorsa(nuovol.getNome())) == null) //la risorsa non c'è nell'archivio
+    	    	    	    	    	    {
+    	    	    	    	    	        	op.aggiungiRisorsaCategoria(nuovol, c);
+    	    	    	    	    	        	System.out.println(INS_SUCCESSO);
+    	    	    	    	    	    }
+    	    	    	    	    	    else
+    	    	    	    	    	        System.out.println(RISORSA_PRESENTE);
+    	    	    	    	    }
+    	    	    	    	    //cosa simile per film nelle successive versioni
+    	    	    	   }
+    	    	    	   else //sono presenti sottocategorie, devo aggiungere a queste
+    	    	    	   {
+    	    	    	    	    System.out.printf(INS_IN_SOTTO, c.getNome(), c.stampaElencoSottocategorie(c));
+    	    	    	    	       
+    	    	    	    	    if(InputDati.leggiUpperChar(INS_COMUNQUE, "SN") == 'S')
+    	    	    	    	    {
+    	    	    	    	    	    int num = InputDati.leggiIntero(INS_NUMERO_SOTTOC, 1, (c.getElencoSottoCategorie()).size());
+    	    	    	    	    	    sc = (c.getElencoSottoCategorie()).get(num-1);
+    	    	    	    	    	    
+    	    	    	    	    	    if(n.equalsIgnoreCase("Libri"))  //mi serve per sapere che metodo di InserimentoRisorsa invocare
+    	    	    	    	    	    {
+    	    	    	    	    	        nuovol = InserimentoRisorsa.inserisciLibro();
+    	    	    	    	    	       
+  	    	    	    	    	        if((sc.getRisorsa(nuovol.getNome()) == null) && ((nuovol.getGenere()).equalsIgnoreCase(sc.getNome()))) //se il libro non c'è nella sottocategoria e il suo genere è uguale al nome della sottocategoria
+  	    	    	    	    	        {
+  	    	    	    	    	        	    op.aggiungiRisorsaCategoria(nuovol, sc);
+  	    	    	    	    	        	    System.out.println(INS_SUCCESSO);
+  	    	    	    	    	        }
+  	    	    	    	    	        else
+  	    	    	    	    	            System.out.println(RISORSA_PRESENTE);
+    	    	    	    	    	    }
+    	    	    	    	    	    //cosa simile per i film nelle successive versioni
+    	    	    	    	     }
+    	    	    	    	     //se digita N, esco da tutto senza fare più nulla
+    	    	    	     }
+    	    	 }
+    	    	 else
+    	    	    	  System.out.println(INS_NON_VALIDO);
+    	    	    	       
+    }
+    
+    /**
      * Vengono inizialmente creati i vari menu' con le relative intestazioni ed opzioni. 
-     * In seguito l'andamento del programma � scandito attraverso l'aggiornamento della variabile letteraMenu e l'uso di switch-case innestati,
+     * In seguito l'andamento del programma è scandito attraverso l'aggiornamento della variabile letteraMenu e l'uso di switch-case innestati,
      * in cui il primo livello (contraddistinto dalle variabili letterali) indica gli specifici menu', mentre il secondo livello (evidenziato
      * dall'uso della variabile intera 'scelta') indica le opzioni relative ad ogni menu' e le operazioni che vengono indi svolte
      * 
      * Pre : af != null
      * Pre : ao != null
+     * Pre : arc != null
      * 
      * @param af : oggetto di tipo AnagraficaFruitori
      * @param ao : oggetto di tipo AnagraficaOperatori
+     * @param arc : oggetto di tipo Archivio
      */
-    public void logicaMenu(AnagraficaFruitori af, AnagraficaOperatori ao)
+    public void logicaMenu(AnagraficaFruitori af, AnagraficaOperatori ao, Archivio arc)
     {
-    	Menu a = new Menu(INTESTAZIONE_A, OPZIONI_A);
+     	Menu a = new Menu(INTESTAZIONE_A, OPZIONI_A);
 	    Menu b = new Menu(INTESTAZIONE_B, OPZIONI_B);
 	    Menu c = new Menu(INTESTAZIONE_C, OPZIONI_C);
 	    Menu d = new Menu(INTESTAZIONE_D, OPZIONI_D);
 	    Menu e = new Menu(INTESTAZIONE_E, OPZIONI_E);
 	    Menu f = new Menu(INTESTAZIONE_F, OPZIONI_F);
     	
-    	boolean esci = false;
-    	char letteraMenu =  'a';
+      	boolean esci = false;
+      	char letteraMenu =  'a';
         int scelta = 0;
         
         Fruitore attualef = null;
@@ -287,34 +367,35 @@ public class GestoreMenu implements Serializable
           
         do
         {
+        	af.decadenzaFruitore();
+        	
         	switch(letteraMenu)
     	    {
-    	    	case('a'):
+    	      	case('a'):
     	        {
-    	    		scelta = a.scegli();
+    	    		   scelta = a.scegli();
 	        	     
-    	    		switch(scelta)
-	        	    {
-	        	    	case 1: letteraMenu = 'b';
+    	    		   switch(scelta)
+	        	   {
+	        	     	case 1: letteraMenu = 'b';
 	        	                break;
   	        	
 	        	        case 2: letteraMenu = 'e';
   	                    		break;
   	                    		
 	        	        case 3: esci = true;
-	        	        		break;
+	        	        		    break;
 	        	    }
-    	    		
-    	    		break;
+    	    		    break;
     	        }
     	          
     	        case('b'):
     	        {
-    	        	scelta = b.scegli();
+    	          	scelta = b.scegli();
 	        	     
 	        	    switch(scelta)
 	        	    {
-	        	    	case 1: iscrizione(af);
+	        	    	    case 1: iscrizione(af);
 	        	                letteraMenu = 'a';
 	        	                break;
   	        	
@@ -322,111 +403,110 @@ public class GestoreMenu implements Serializable
   	                    		break;
   	                    		
 	        	        case 3: letteraMenu = 'a';
-                  				break;
+                  		    break;
 	        	    }
-	        	    
 	        	    break;
     	        }
     	          
     	        case('c'):
     	        {
-    	        	scelta = c.scegli();
+    	          	scelta = c.scegli();
     	        	     
-    	        	switch(scelta)
-    	        	{
-    	        		case 1: attualef = (Fruitore) accesso(af);
+    	         	switch(scelta)
+    	        	    {
+    	        		     case 1: attualef = (Fruitore) accesso(af);
         	        	        
-    	        				if(attualef != null)
-    	        				{
-    	        					letteraMenu = 'd';
-    	        				}
-    	        				else
-    	        				{
-    	        					System.out.println(ERRORE);
-    	        					letteraMenu = 'c';
-    	        				}
-    	        				
-    	        				break;
+    	                         if(attualef != null)
+    	        				     {
+    	        					     letteraMenu = 'd';
+    	        				     }
+    	        				     else
+    	        				     {
+    	        					     System.out.println(ERRORE);
+    	        					     letteraMenu = 'c';
+    	        				     }
+    	        				     break;
       	        	
-    	        	    case 2: letteraMenu = 'b';
-      	                    	break;
-    	        	}
-    	        	
-    	        	break;
+    	        	         case 2: letteraMenu = 'b';
+      	                     break;
+    	        	     }
+    	         	 break;
     	        }
     	          
     	        case('d'):
     	        {
-    	        	scelta = d.scegli();
+    	         	scelta = d.scegli();
  	        	     
  	        	    switch(scelta)
  	        	    {
- 	        	    	case 1: if(af.rinnovoIscrizioneFruitore(attualef.getUsername()))
- 	        	                	System.out.println(RINNOVO_OK);
- 	        	                else
- 	        	                  	System.out.println(RINNOVO_NON_OK);
+ 	        	         case 1: if(af.rinnovoIscrizioneFruitore(attualef.getUsername()))
+ 	        	                     	System.out.println(RINNOVO_OK);
+ 	        	                 else
+ 	        	                  	    System.out.println(RINNOVO_NON_OK);
      	        				
- 	        	    			letteraMenu = 'd';
- 	        	                break;
+ 	        	                 letteraMenu = 'd';
+ 	        	                 break;
  	        	                
  	        	        case 2: System.out.println(attualef.toString());
- 	        	        		letteraMenu = 'd';
+ 	        	        		    letteraMenu = 'd';
  	        	                break;
  	        	        	
  	        	        case 3: letteraMenu = 'a';
+ 	        	        		attualef = null;
  	        	                break;
  	        	    }
- 	        	    
  	        	    break;
     	        }
     	        
     	        case('e'):
     	        {
-    	        	scelta = e.scegli();
+    	        	    scelta = e.scegli();
  	        	     
  	        	    switch(scelta)
  	        	    {
- 	        	    	case 1: attualeop = (Operatore) accesso(ao);
+ 	        	    	     case 1: attualeop = (Operatore) accesso(ao);
  	        	    				
- 	        	    			if(attualeop != null)
- 	        	    			{
- 	        	    				letteraMenu = 'f';
- 	        	    			}
- 	        	    			else
- 	        	    			{
- 	        	    				System.out.println(ERRORE);
- 	        	    				letteraMenu = 'e';
- 	        	    			}
- 	        	    	
- 	        	    			break;
+ 	                         if(attualeop != null)
+ 	        	    			     {
+ 	        	    				    letteraMenu = 'f';
+ 	        	    			     }
+ 	        	    			     else
+ 	        	    			     {
+ 	        	    				    System.out.println(ERRORE);
+ 	        	    				    letteraMenu = 'e';
+ 	        	    			     }
+ 	        	    	             break;
  	        	                
  	        	        case 2: letteraMenu = 'a';
+ 	        	        		attualeop = null;
  	        	                break;
  	        	    }
- 	        	    
  	        	    break;
     	        }
     	        
     	        case('f'):
     	        {
-    	        	 scelta = f.scegli();
+    	        	     scelta = f.scegli();
  	        	     
  	        	     switch(scelta)
  	        	     {
  	        	     	case 1: attualeop.visualizzaElencoFruitori(af);
  	        	     			letteraMenu = 'f';
  	        	                break;
- 	        	        
- 	        	     	case 2: //Metodo 1
- 	        	     	
- 	        	     	case 3:	//Metodo 2
- 	        	     	
- 	        	     	case 4: //Metodo 3
+ 	        	                
+ 	        	     	case 2: attualeop.visualizzaArchivio(arc);
+ 	        	     	        letteraMenu = 'f';
+ 	        	     	        break;
+ 	        	     	        
+ 	        	     	case 3: aggiungiRisorsa(attualeop, arc);
+ 	        	     	        letteraMenu = 'f';
+ 	        	     	        break;
  	        	     		
+ 	        	     	case 4:
+ 	        	                
  	        	        case 5: letteraMenu = 'a';
  	        	                break;
  	        	     }
- 	        	     
  	        	     break;
     	        }
     	        
