@@ -1,10 +1,19 @@
-package it.ing.sw;
+package it.ing.sw.v2;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Vector;
 
-public class Libro extends Risorsa
+/**
+ * Questa classe rappresenta il modello di un Libro
+ */
+public class Libro extends Risorsa implements Serializable
 {
-    private String titolo;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String titolo;
     private Vector <String> autore_i; 
     private int numPagine;
     private int annoPub;
@@ -12,11 +21,26 @@ public class Libro extends Risorsa
     private String lingua;
     private String genere;
     
-    public static final String DESCRIZIONE_LIBRO = "\nTitolo: %s\nAutore/i: %s\nNumero licenze: %d\nNumero pagine: %d\nAnno di pubblicazione: %d\nCasa editrice: %s\nLingua: %s\nGenere: %s\n";
+    public static final String DESCRIZIONE_LIBRO = "Titolo: %s\n\t\tAutore/i: %s\n\t\tNumero licenze: %d\n\t\tNumero pagine: %d\n\t\tAnno di pubblicazione: %d\n\t\tCasa editrice: %s\n\t\tLingua: %s\n\t\tGenere: %s\n";
     
+    /**
+     * Metodo costruttore della classe Libro
+     * 
+     * Pre: a != null
+     * Post: autore_i != null
+     * 
+     * @param licenze: numero delle licenze del libro
+     * @param t: titolo del libro
+     * @param a: autore/i del libro
+     * @param np: numero delle pagine del libro
+     * @param ap: anno di pubblicazione del libro
+     * @param ce: casa editrice del libro
+     * @param l: lingua in cui è scritto il libro
+     * @param g: genere del libro
+     */
     public Libro(int licenze, String t, Vector <String> a, int np, int ap, String ce, String l, String g)
     {
-    	   super(licenze);
+    	   super(t, licenze);
     	   this.autore_i = a;
     	   this.titolo = t;
     	   this.numPagine = np;
@@ -26,22 +50,40 @@ public class Libro extends Risorsa
     	   this.genere = g;
     }
     
+    /**
+     * Medoto get per il ritorno dell'attributo titolo del libro
+     */
+    public String getTitolo()
+    {
+    	    return titolo;
+    }
+    
+    public String getGenere()
+    {
+    	    return genere;
+    }
+    
+    /**
+     * Metodo toString() per la creazione di una stringa descrittiva contenente i vari attributi dell'oggetto Libro
+     * 
+     * Pre: autore_i != null
+     * 
+     * @return la stringa descrittiva del libro
+     */
     public String toString()
     {
        StringBuffer ris = new StringBuffer();
-       
        StringBuffer aut = new StringBuffer();
+       
        for(int i = 0; i < autore_i.size(); i++)
        {
     	       aut.append(autore_i.get(i));
     	       if(i < autore_i.size()-1)
     	    	        aut.append("-");
        }
-       aut.toString();
        
-       ris.append(String.format(DESCRIZIONE_LIBRO, titolo, aut, getNumLicenze(), numPagine, annoPub, casaEditrice, lingua, genere));
+       ris.append(String.format(DESCRIZIONE_LIBRO, titolo, aut.toString(), getNumLicenze(), numPagine, annoPub, casaEditrice, lingua, genere));
        return ris.toString();
     }
-    
     
 }

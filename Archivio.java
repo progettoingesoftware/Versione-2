@@ -1,23 +1,92 @@
-package it.ing.sw;
+package it.ing.sw.v2;
 
-public class Archivio 
-{
+import java.io.Serializable;
+import java.util.Vector;
+
+/**
+ * Questa classe rappresenta il modello di un Archivio
+ */
+public class Archivio implements Serializable
+{  
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Vector <Categoria> elencoCategorie;
 	
-	//Metodo 1
-	//Metodo che per ogni categoria: verifica se il vettore di sottocategorie è vuoto,
-	//in tal caso stampa direttamente l'elenco delle risorse che non deve essere vuoto.
-	//Altrimenti per ogni sottocategoria stampa l'elenco delle risorse associate.
+	public static final String DESCRIZIONE_ARCHIVIO = "\nL'archivio presenta il seguente contenuto:\n";
 	
-	//Metodo 2
-	//Chiede di specificare il percorso: Categoria -> (Sottocategoria)
-	//Verifica quindi che vi sia una specifica categoria(sottocategoria) con il nome indicato all'interno dell'archivio
-	//e una volta trovato aggiunge la risorsa indicata
-
-	//Metodo 3
-	//Chiede di specificare il percorso: Categoria -> (Sottocategoria)
-	//Verifica quindi che vi sia una specifica categoria(sottocategoria) con il nome indicato all'interno dell'archivio
-	//e una volta trovato toglie la risorsa indicata
+	/**
+	 * Metodo costruttore della classe Archivio
+	 * 
+	 * Post: elencoCategorie != null
+	 */
+	public Archivio()
+	{
+		elencoCategorie = new Vector <Categoria> ();
+	}
 	
-	//Gestire i casi in cui il numero delle licenze sia 0
+	/**
+	 * Metodo get della classe Archivio
+	 */
+	public Vector <Categoria> getElencoCategorie()
+	{
+		return elencoCategorie;
+	}
+		
+	/**
+	 * Metodo per l'aggiunta di una categoria all'archivio, viene invocato al momento della creazione della struttura
+	 * dell'archivio nel Main
+	 * 
+	 * Pre: c != null
+	 * 
+	 * @param c: la categoria da aggiungere
+	 */
+	public void aggiungiCategoria(Categoria c)
+	{
+		elencoCategorie.add(c);
+	}
+	
+	/**
+	 * Metodo per la semplice stampa dell'elenco dei nomi delle categorie presenti in archivio
+	 * 
+	 * Pre: elencoCategorie != null
+	 * 
+	 * @return la stringa con l'elenco dei nomi delle categorie dell'archivio
+	 */
+	public String stampaElencoCategorie()
+	{
+		StringBuffer ris = new StringBuffer();
+		   
+		for(int i = 0; i < elencoCategorie.size(); i++)
+		{
+			   Categoria c = elencoCategorie.get(i);
+			   ris.append(i+1 + ")" + c.getNome() + "\n");
+		}
+		   
+	    return ris.toString();
+	}
+	
+	/**
+     * Metodo toString() per la creazione di una stringa descrittiva del contenuto dell'archivio
+     * 
+     * Pre: elencoCategorie != null
+     * 
+     * @return la stringa descrittiva dell'archivio
+     */
+	public String toString()
+	{
+		StringBuffer ris = new StringBuffer();
+		ris.append(DESCRIZIONE_ARCHIVIO);
+		
+		for(int i = 0; i < elencoCategorie.size(); i++)
+		{
+			Categoria c = elencoCategorie.get(i);
+			ris.append(i+1 + ")" + c.toString());
+		}
+		
+		return ris.toString();
+	}
+	
 }

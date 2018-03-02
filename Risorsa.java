@@ -1,27 +1,48 @@
-package it.ing.sw;
+package it.ing.sw.v2;
 
-public abstract class Risorsa 
+import java.io.Serializable;
+
+/**
+ * Questa classe rappresenta il modello di una risorsa
+ */
+public abstract class Risorsa implements Serializable
 {
-    private int numLicenze;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private String nome;
+	private int numLicenze;
     
-    public Risorsa(int l)
+	/**
+	 * Metodo costruttore della classe Risora
+	 * @param n: il nome con cui identificare la risorsa
+	 * @param l: il numero delle licenze associate alla risorsa
+	 */
+    public Risorsa(String n, int l)
     {
-    	   this.numLicenze = l;
+    	    this.nome = n;
+    	    this.numLicenze = l;
     }
     
-    public int getNumLicenze()
+    /**
+     * Metodi get per il ritorno dei vari attributi della classe Risorsa
+     * @return
+     */
+    public String getNome()
+    {
+    	    return nome;
+    }
+    
+    public int getNumLicenze() 
     {
     	   return numLicenze;
     }
     
-    public void incrementaLicenze()
-    {
-    	   numLicenze++;
-    }
+    /**
+     * Metodo astratto toString() per la descrizione di una risorsa
+     */
+    public abstract String toString();
     
-    public void decrementaLicenze()
-    {
-    	   numLicenze--;
-    }
-
 }
