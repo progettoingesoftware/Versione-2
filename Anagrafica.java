@@ -1,7 +1,6 @@
-package it.ing.sw.v1;
+package it.ing.sw.v2.p1;
 
 import java.io.Serializable;
-import java.time.*;
 import java.util.*;
 
 /**
@@ -9,9 +8,6 @@ import java.util.*;
  */
 public class Anagrafica implements Serializable
 {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	protected Vector <Utente> elenco;
@@ -21,7 +17,12 @@ public class Anagrafica implements Serializable
      */
     public Anagrafica()
     {
-    	   elenco = new Vector <Utente> ();
+    	elenco = new Vector <Utente> ();
+    }
+    
+    public Vector <Utente> getElenco()
+    {
+    	return elenco;
     }
     
     /**

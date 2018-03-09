@@ -1,4 +1,4 @@
-package it.ing.sw.v2;
+package it.ing.sw.v2.p2;
 
 import java.io.Serializable;
 
@@ -7,9 +7,6 @@ import java.io.Serializable;
  */
 public abstract class Risorsa implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private String nome;

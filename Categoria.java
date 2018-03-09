@@ -1,4 +1,4 @@
-package it.ing.sw.v2;
+package it.ing.sw.v2.p2;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -10,9 +10,6 @@ import java.util.Vector;
  */
 public class Categoria implements Serializable
 {
-   /**
-	 * 
-	 */
    private static final long serialVersionUID = 1L;
    
    private String nomeCategoria;
@@ -21,6 +18,8 @@ public class Categoria implements Serializable
    
    public static final String DESCRIZIONE_CATEGORIA_SEMPLICE = "Nome categoria: %s\nRisorse in essa contenute:\n";
    public static final String DESCRIZIONE_CATEGORIA_COMPOSTA = "Nome categoria: %s\nSottocategorie in essa contenute:\n";
+   public static final String ELENCO_SOTTOCATEGORIE_VUOTO = "\tAl momento non sono presenti sottocategorie\n";
+   public static final String ELENCO_RISORSE_VUOTO = "\t\tAl momento non sono presenti risorse\n";
    
    /**
     * Metodo costruttore della classe Categoria
@@ -78,7 +77,7 @@ public class Categoria implements Serializable
    }
    
    /**
-    * Data una stringa n, questo metodo restituisce l'oggetto Risorsa avente n come nome, se è presente
+    * Data una stringa n, questo metodo restituisce l'oggetto Risorsa avente n come nome, se e' presente
     * 
     * Pre: elencoRisorse != null
     * 
@@ -190,22 +189,32 @@ public class Categoria implements Serializable
 	   {
 	       ris.append(String.format(DESCRIZIONE_CATEGORIA_SEMPLICE, nomeCategoria));
 	   
-	       for(int i = 0; i < elencoRisorse.size(); i++)
+	       if(elencoRisorse.size() == 0)
+	    	       ris.append(ELENCO_RISORSE_VUOTO);
+	       else
 	       {
-		      Risorsa r = elencoRisorse.get(i);
-		      ris.append(i+1 + ")"+ r.toString());
+	          for(int i = 0; i < elencoRisorse.size(); i++)
+	          {
+		         Risorsa r = elencoRisorse.get(i);
+		         ris.append("\t\t" + (i+1) + ")"+ r.toString());
+	          }
 	       }
 	   }
 	   else
 	   {
 		   ris.append(String.format(DESCRIZIONE_CATEGORIA_COMPOSTA, nomeCategoria));
 		   
-		   for(int i = 0; i < elencoSottoCategorie.size(); i++)
-	       {
-		      SottoCategoria s = elencoSottoCategorie.get(i);
-		      ris.append("t" + (i+1) + ")"+ s.toString());
-	       }
-	   }
+		   if(elencoSottoCategorie.size() == 0)
+			    ris.append(ELENCO_SOTTOCATEGORIE_VUOTO);
+		   else
+		   {
+		      for(int i = 0; i < elencoSottoCategorie.size(); i++)
+	          {
+		         SottoCategoria s = elencoSottoCategorie.get(i);
+		         ris.append("\t"+ (i+1) + ")"+ s.toString());
+	          }
+	        }
+	    }
 	   
 	   return ris.toString();
    }

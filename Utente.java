@@ -1,4 +1,4 @@
-package it.ing.sw.v1;
+package it.ing.sw.v2.p1;
 
 import java.io.Serializable;
 
@@ -7,9 +7,6 @@ import java.io.Serializable;
  */
 public class Utente implements Serializable
 {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private String nome;
@@ -26,10 +23,10 @@ public class Utente implements Serializable
      */
     public Utente(String n, String c, String u, String p)
     {
-    	     this.nome = n;
-    	     this.cognome = c;
-    	     this.username = u;
-    	     this.password = p;
+    	this.nome = n;
+    	this.cognome = c;
+    	this.username = u;
+    	this.password = p;
     }
     
     /**

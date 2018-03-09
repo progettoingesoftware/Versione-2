@@ -1,14 +1,12 @@
-package it.ing.sw.v1;
+package it.ing.sw.v2.p2;
 
 import java.io.File;
 import java.util.Vector;
 
 import it.ing.sw.*;
-import it.ing.sw.v2.Archivio;
-import it.ing.sw.v2.Categoria;
-import it.ing.sw.v2.GestoreMenu;
-import it.ing.sw.v2.Libro;
-import it.ing.sw.v2.SottoCategoria;
+import it.ing.sw.v2.p1.AnagraficaFruitori;
+import it.ing.sw.v2.p1.AnagraficaOperatori;
+import it.ing.sw.v2.p1.Operatore;
 
 public class Main 
 {
@@ -34,11 +32,11 @@ public class Main
 		Operatore quarto = new Operatore("Fabio", "Piccinelli", "picci", "fighter118");
 		Operatore quinto = new Operatore("Ottavia", "Lauretti", "oct4565", "ppla210");
 		
-		ao.elenco.addElement(primo);
-		ao.elenco.addElement(secondo);
-		ao.elenco.addElement(terzo);
-		ao.elenco.addElement(quarto);
-		ao.elenco.addElement(quinto);
+		ao.getElenco().addElement(primo);
+		ao.getElenco().addElement(secondo);
+		ao.getElenco().addElement(terzo);
+		ao.getElenco().addElement(quarto);
+		ao.getElenco().addElement(quinto);
 	}
 	
 	/**
@@ -67,7 +65,7 @@ public class Main
 	    c.aggiungiSottoCategoria(s5);
 	    
 	    Vector <String> a1 = new Vector <String> ();
-	    a1.add("Antoine de Saint_Exupéry");
+	    a1.add("Antoine de Saint_Exupery");
 	    Vector <String> a2 = new Vector <String> ();
 	    a2.add("J.R.R. Tolkien");
 	    Vector <String> a3 = new Vector <String> ();
@@ -152,7 +150,7 @@ public class Main
 			arc = new Archivio();
 			
 			aggiuntaOperatoriPreimpostati(ao);
-			creaStrutturaArchivio(arc);
+			//creaStrutturaArchivio(arc);
 		}
 		
 		/**

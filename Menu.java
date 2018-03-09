@@ -1,4 +1,4 @@
-package it.ing.sw.v1;
+package it.ing.sw.v2.p1;
 
 import java.io.Serializable;
 
@@ -9,9 +9,6 @@ import it.ing.sw.InputDati;
  */
 public class Menu implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	public static final String CORNICE = "*************************************************************";

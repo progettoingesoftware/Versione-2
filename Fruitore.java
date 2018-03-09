@@ -1,4 +1,4 @@
-package it.ing.sw.v1;
+package it.ing.sw.v2.p1;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -9,9 +9,6 @@ import java.time.format.DateTimeFormatter;
  */
 public class Fruitore extends Utente implements Serializable
 {
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private LocalDate dataDiNascita;             
@@ -20,6 +17,7 @@ public class Fruitore extends Utente implements Serializable
       
     public static final String DESCRIZIONE_FRUITORE = "\nNome: %s\nCognome: %s\nUsername: %s\nPassword: %s\nData di nascita: %s\nData di iscrizione: %s\nData di scadenza: %s\n";
     public static final int TERMINE_SCADENZA = 5;
+    public static final int DIECI_GIORNI = 10;
     public static final String FORMATO_DATA = "dd/MM/yyyy";
     
     /**
@@ -81,6 +79,31 @@ public class Fruitore extends Utente implements Serializable
     {
    	 	 dataDiScadenza = nuovads;
     }
+    
+    /**
+     * La verifica della data avviene mediante due if concatenati:
+     * il primo verifica che la data corrente preceda quella di scadenza indicata per lo specifico fruitore;
+     * il secondo verifica che la data corrente succeda quella di scadenza (indicata per lo specifico fruitore) diminuita di un periodo di 10 giorni
+     *  
+     * @return boolean : true se la condizione indicata e' verificata
+     */ 
+    public boolean rinnovaIscrizione()
+    {
+
+    	if((LocalDate.now().isBefore(dataDiScadenza)))
+   	 	{
+    		
+    		if((LocalDate.now().isAfter(dataDiScadenza.minusDays(DIECI_GIORNI))))
+       	 	{
+   	 			setDataDiScadenza(LocalDate.now().plusYears(Fruitore.TERMINE_SCADENZA));
+   	 			return true;
+       	 	}
+    		
+   	 	}
+    	
+   	 	return false;  
+   	 				
+   	 }
     
     /**
      * Metodo toString() ereditato dalla classe String per la creazione di una stringa descrittiva contenente i vari attributi dell'oggetto Fruitore

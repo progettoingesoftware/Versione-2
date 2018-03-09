@@ -1,15 +1,15 @@
-package it.ing.sw.v2;
+package it.ing.sw.v2.p2;
 
 import java.io.Serializable;
 import java.time.DateTimeException;
 import it.ing.sw.*;
-import it.ing.sw.v1.Anagrafica;
-import it.ing.sw.v1.AnagraficaFruitori;
-import it.ing.sw.v1.AnagraficaOperatori;
-import it.ing.sw.v1.Fruitore;
-import it.ing.sw.v1.Menu;
-import it.ing.sw.v1.Operatore;
-import it.ing.sw.v1.Utente;
+import it.ing.sw.v2.p1.Anagrafica;
+import it.ing.sw.v2.p1.AnagraficaFruitori;
+import it.ing.sw.v2.p1.AnagraficaOperatori;
+import it.ing.sw.v2.p1.Fruitore;
+import it.ing.sw.v2.p1.Menu;
+import it.ing.sw.v2.p1.Operatore;
+import it.ing.sw.v2.p1.Utente;
 
 import java.time.*;
 
@@ -21,9 +21,6 @@ import java.time.*;
  */
 public class GestoreMenu implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	public static final String SALUTO_INIZIALE = "Benvenuto nell'applicazione per la gestione di risorse multimediali\n";
@@ -66,24 +63,32 @@ public class GestoreMenu implements Serializable
 	public static final String RICHIESTA_PROSECUZIONE = "Si desidera riprovare? (S/N)\n";
 	public static final String ERRORE = "Si e' verificato un errore\n";
 
-	public static final String CONTENUTO_ARC = "L'archivio contiene le seguenti categorie:\n%s";
-	public static final String CONTENUTO_CAT = "La categoria %s contiene queste risorse:\n%s";
-	public static final String CONTENUTO_SOTTO = "La sottocategoria %s contiene queste risorse:\n%s"; 
+	public static final String CONTENUTO_ARC = "L'archivio contiene le seguenti categorie:\n%s\n";
+	public static final String CONTENUTO_CAT_RISORSA = "La categoria %s contiene queste risorse:\n%s\n";
+	public static final String CAT_SENZA_SOTTO = "La categoria %s non presenta sottocategorie in quanto contiene direttamente le risorse\n";
+	public static final String CONTENUTO_CAT_SOTTO = "La categoria %s contiene queste sottocategorie:\n%s\n";
+	public static final String CONTENUTO_SOTTO = "La sottocategoria %s contiene queste risorse:\n%s\n"; 
 	
 	public static final String OP_SUCCESSO = "L'operazione e' avvenuta con successo\n";
-    public static final String OP_NO_SUCCESSO = "Attenzione! La risorsa e' gia'  presente nell'archivio oppure la risorsa non e' compatibile con la sottocategoria dove si vuole inserirla\n";
+    public static final String OP_NO_SUCCESSO_AGGIUNTA = "Attenzione! La risorsa e' gia' presente nell'archivio oppure la risorsa non e' compatibile con la sottocategoria dove si vuole inserire\n";
 
-    public static final String INS_NUMERO_CAT = "Inserisci il numero della categoria a cui aggiungere/rimuovere la risorsa:\n";
-    public static final String INS_IN_SOTTO = "La categoria %s contiene queste sottocategorie:\n%s";
-    public static final String INS_PROCEDERE_SOTTO = "Vuoi proseguire nell'inserimento/rimozione della risorsa in/da una sottocategoria (S/N)?\n";
-    public static final String INS_NUMERO_SOTTOC =  "Inserisci il numero della sottocategoria a cui aggiungere/rimuovere la risorsa:\n";
-    public static final String INS_NUMERO_RISORSA = "Inserisci il numero della risorsa da rimuovere:\n";    
-    public static final String INS_PROCEDERE_RISORSA = "Vuoi proseguire nella rimozione della risorsa? (S/N)\n";
+    public static final String INS_NUMERO_CAT_AGGIUNTA_RISORSA = "Inserisci il numero della categoria a cui aggiungere la risorsa:\n";
+    public static final String INS_NUMERO_CAT_RIMOZIONE_RISORSA = "Inserisci il numero della categoria a cui rimuovere la risorsa:\n";
+ 
+    public static final String INS_NUMERO_SOTTO_AGGIUNTA_RISORSA =  "Inserisci il numero della sottocategoria a cui aggiungere la risorsa:\n";
+    public static final String INS_NUMERO_SOTTO_RIMOZIONE_RISORSA =  "Inserisci il numero della sottocategoria a cui rimuovere la risorsa:\n";
+
+    public static final String INS_NUMERO_RISORSA_RIMOZIONE = "Inserisci il numero della risorsa da rimuovere:\n";
+    
+    public static final String INS_PROCEDERE_CAT = "Vuoi proseguire nella scelta della categoria (S/N)?\n";
+    public static final String INS_PROCEDERE_SOTTO = "Vuoi proseguire nella scelta della sottocategoria (S/N)?\n";
+    public static final String INS_PROCEDERE_RISORSA = "Vuoi proseguire nella scelta della risorsa? (S/N)\n";
 	
     public static final int NUM_MINIMO = 1;
+    public static final int NULLO = 0;
 
     /**
-	 * Metodo per l'aggiunta di un nuovo fruitore all'elenco dei fruitori gia' presenti all'interno di af.
+	 * Metodo di interazione con l'utente per l'aggiunta di un nuovo fruitore all'elenco dei fruitori gia' presenti all'interno di af.
 	 * Vengono effettuati dei controlli sulla correttezza della data di nascita inserita e sulla possibile presenza di fruitori gia' iscritti in possesso delle medesime credenziali indicate
 	 * 
 	 * Pre : af != null
@@ -233,7 +238,7 @@ public class GestoreMenu implements Serializable
 	}
 	
 	/**
-	 * Metodo per l'accesso di un utente al sistema.
+	 * Metodo di interazione con l'utente per l'accesso al sistema.
 	 * Vengono effettuati dei controlli sulla correttezza dello username e della password indicati
 	 * 
 	 * Pre : ag != null
@@ -279,6 +284,7 @@ public class GestoreMenu implements Serializable
 	    return ut;
 	}
     
+    
     /**
     * Metodo per l'aggiunta di una risorsa ad una (sotto)categoria dell'archivio
     * 
@@ -294,46 +300,62 @@ public class GestoreMenu implements Serializable
     	Libro nuovol = null;
     	     
     	System.out.printf(CONTENUTO_ARC, arc.stampaElencoCategorie());
-    	int num1 = InputDati.leggiIntero(INS_NUMERO_CAT, NUM_MINIMO, (arc.getElencoCategorie()).size());
-    	c = (arc.getElencoCategorie()).get(num1-1);
     	
-    	System.out.printf(INS_IN_SOTTO, c.getNome(), c.stampaElencoSottocategorie());
+      	if(arc.getElencoCategorie().size() != NULLO  && InputDati.leggiUpperChar(INS_PROCEDERE_CAT, "SN") == 'S')
+    	{
+        	int num1 = InputDati.leggiIntero(INS_NUMERO_CAT_AGGIUNTA_RISORSA, NUM_MINIMO, (arc.getElencoCategorie()).size());
+        	c = (arc.getElencoCategorie()).get(num1-1);
+        
+          	if(c.getElencoSottoCategorie().size() == NULLO)
+        	{
+          		System.out.printf(CAT_SENZA_SOTTO, c.getNome());
+          	    
+          		if(InputDati.leggiUpperChar(INS_PROCEDERE_CAT, "SN") == 'S')
+          		{
+          			if((c.getNome()).equalsIgnoreCase("Libri"))  
+          			{
+          				nuovol = InserimentoRisorsa.inserisciLibro();
+        	    	    	    	    	       
+          				if(c.getRisorsa(nuovol.getNome()) == null )
+          				{
+          					op.aggiungiRisorsaCategoria(nuovol, c);
+          					System.out.println(OP_SUCCESSO);
+          				}
+          				else
+          					System.out.println(OP_NO_SUCCESSO_AGGIUNTA);
+          			}
+          			
+          		}
+          	    
+        	}
+        	else
+        	{
+            	System.out.printf(CONTENUTO_CAT_SOTTO, c.getNome(), c.stampaElencoSottocategorie());
+            	
+            	if(InputDati.leggiUpperChar(INS_PROCEDERE_SOTTO, "SN") == 'S')
+            	{	 
+            		int num2 = InputDati.leggiIntero(INS_NUMERO_SOTTO_AGGIUNTA_RISORSA, NUM_MINIMO, (c.getElencoSottoCategorie()).size());
+            		sc = (c.getElencoSottoCategorie()).get(num2-1);
+        	    	    	    	    	    
+            		if((c.getNome()).equalsIgnoreCase("Libri"))  
+            		{
+            			nuovol = InserimentoRisorsa.inserisciLibro();
+        	    	    	    	    	       
+      	    	   		if( (sc.getRisorsa(nuovol.getTitolo()) == null) && (nuovol.getGenere()).equalsIgnoreCase(sc.getNome()) )
+      	    	   		{
+      	    	   			op.aggiungiRisorsaCategoria(nuovol, sc);
+      	    	   			System.out.println(OP_SUCCESSO);
+      	    	   		}
+      	    	   		else
+      	    	   			System.out.println(OP_NO_SUCCESSO_AGGIUNTA);
+            		}
+            	
+            	}
+        	    
+        	}
+          	
+    	}
     	
-    	if(c.getElencoSottoCategorie() == null)
-    	{
-      	    if((c.getNome()).equalsIgnoreCase("Libri"))  
-    	    {
-    	    	nuovol = InserimentoRisorsa.inserisciLibro();
-    	    	    	    	    	       
-  	    	   	if((c.getRisorsa(nuovol.getNome()) == null))
-  	    	   	{
-  	    	   		op.aggiungiRisorsaCategoria(nuovol, c);
-  	    	    	System.out.println(OP_SUCCESSO);
-  	    	   	}
-  	    	   	else
-  	    	    	System.out.println(OP_NO_SUCCESSO);
-    	    }
-      	    
-    	}
-    	else if(InputDati.leggiUpperChar(INS_PROCEDERE_SOTTO, "SN") == 'S')
-    	{
-    	    int num2 = InputDati.leggiIntero(INS_NUMERO_SOTTOC, NUM_MINIMO, (c.getElencoSottoCategorie()).size());
-    	    sc = (c.getElencoSottoCategorie()).get(num2-1);
-    	    	    	    	    	    
-    	    if((c.getNome()).equalsIgnoreCase("Libri"))  
-    	    {
-    	    	nuovol = InserimentoRisorsa.inserisciLibro();
-    	    	    	    	    	       
-  	    	   	if((sc.getRisorsa(nuovol.getNome()) == null) && ((nuovol.getGenere()).equalsIgnoreCase(sc.getNome())))
-  	    	   	{
-  	    	   		op.aggiungiRisorsaCategoria(nuovol, sc);
-  	    	    	System.out.println(OP_SUCCESSO);
-  	    	   	}
-  	    	   	else
-  	    	    	System.out.println(OP_NO_SUCCESSO);
-    	    }
-    	    
-    	}
     	
     }
     
@@ -352,35 +374,48 @@ public class GestoreMenu implements Serializable
 	    Risorsa daEliminare = null;
 	    
 	    System.out.printf(CONTENUTO_ARC, arc.stampaElencoCategorie());
-	    int num1 = InputDati.leggiIntero(INS_NUMERO_CAT, NUM_MINIMO, (arc.getElencoCategorie()).size());
-   	    c = (arc.getElencoCategorie()).get(num1-1);
-   	       	    
-   	    System.out.printf(INS_IN_SOTTO, c.getNome(), c.stampaElencoSottocategorie());
+	    
+	  	if(arc.getElencoCategorie().size() != NULLO && InputDati.leggiUpperChar(INS_PROCEDERE_CAT, "SN") == 'S')
+    	{
+        	int num1 = InputDati.leggiIntero(INS_NUMERO_CAT_RIMOZIONE_RISORSA, NUM_MINIMO, (arc.getElencoCategorie()).size());
+        	c = (arc.getElencoCategorie()).get(num1-1);
+    	
+        	if(c.getElencoSottoCategorie().size() == NULLO)
+    	    {
+    	    	   System.out.printf(CONTENUTO_CAT_RISORSA, c.getNome(), c.stampaElencoRisorse());
+    	    	   
+    	    	   if(InputDati.leggiUpperChar(INS_PROCEDERE_RISORSA, "SN") == 'S')
+    	    	   {
+    		    	   int num3 = InputDati.leggiIntero(INS_NUMERO_RISORSA_RIMOZIONE, NUM_MINIMO, (c.getElencoRisorse()).size());
+    		    	   daEliminare = (c.getElencoRisorse()).get(num3-1);
+    		    	   op.rimuoviRisorsaCategoria(daEliminare, c);
+    	    	   }
 
-  	    if(c.getElencoSottoCategorie() == null)
-	    {
-	    	   System.out.printf(CONTENUTO_CAT, c.getNome(), c.stampaElencoRisorse());
-	    	   
-	    	   int num3 = InputDati.leggiIntero(INS_NUMERO_RISORSA, NUM_MINIMO, (c.getElencoRisorse()).size());
-	    	   daEliminare = (c.getElencoRisorse()).get(num3-1);
-	    	   op.rimuoviRisorsaCategoria(daEliminare, c);
-	    } 
-  	    else if(InputDati.leggiUpperChar(INS_PROCEDERE_SOTTO, "SN") == 'S')
-	    {
-	    	   int num2 = InputDati.leggiIntero(INS_NUMERO_SOTTOC, NUM_MINIMO, (c.getElencoSottoCategorie()).size());
-	    	   sc = (c.getElencoSottoCategorie()).get(num2-1);
+    	    } 
+      	    else
+    	    {
+      	       	System.out.printf(CONTENUTO_CAT_SOTTO, c.getNome(), c.stampaElencoSottocategorie());
+      	       		
+      	       	 if(InputDati.leggiUpperChar(INS_PROCEDERE_SOTTO, "SN") == 'S')
+      	       	 {
+    	    	   int num2 = InputDati.leggiIntero(INS_NUMERO_SOTTO_RIMOZIONE_RISORSA, NUM_MINIMO, (c.getElencoSottoCategorie()).size());
+    	    	   sc = (c.getElencoSottoCategorie()).get(num2-1);
 
-	    	   System.out.printf(CONTENUTO_SOTTO, sc.getNome(), sc.stampaElencoRisorse());
-	    	   
-	    	   if(InputDati.leggiUpperChar(INS_PROCEDERE_RISORSA, "SN") == 'S')
-	    	   {
-	    		   int num3 = InputDati.leggiIntero(INS_NUMERO_RISORSA, NUM_MINIMO, (sc.getElencoRisorse()).size());
-	    		   daEliminare = (sc.getElencoRisorse()).get(num3-1);
-	    		   op.rimuoviRisorsaCategoria(daEliminare, sc);
-	    	   }
-	    	   
-	    }   
-   	    
+    	    	   System.out.printf(CONTENUTO_SOTTO, sc.getNome(), sc.stampaElencoRisorse());
+    	    	   
+    	    	   if(sc.getElencoRisorse().size() != NULLO && InputDati.leggiUpperChar(INS_PROCEDERE_RISORSA, "SN") == 'S')
+    	    	   {
+    	    		   int num3 = InputDati.leggiIntero(INS_NUMERO_RISORSA_RIMOZIONE, NUM_MINIMO, (sc.getElencoRisorse()).size());
+    	    		   daEliminare = (sc.getElencoRisorse()).get(num3-1);
+    	    		   op.rimuoviRisorsaCategoria(daEliminare, sc);
+    	    	   }
+    	    	 
+      	       	 }
+    	    	   
+    	    }   
+  	    
+    	}
+    	
     }
     
     /**
@@ -489,7 +524,7 @@ public class GestoreMenu implements Serializable
  	        	     
  	        	    switch(scelta)
  	        	    {
- 	        	         case 1: if(af.rinnovoIscrizioneFruitore(attualef.getUsername()))
+ 	        	         case 1: if(attualef.rinnovaIscrizione())
  	        	                     	System.out.println(RINNOVO_OK);
  	        	                 else
  	        	                  	    System.out.println(RINNOVO_NON_OK);
