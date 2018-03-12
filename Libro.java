@@ -32,7 +32,7 @@ public class Libro extends Risorsa implements Serializable
      * @param np: numero delle pagine del libro
      * @param ap: anno di pubblicazione del libro
      * @param ce: casa editrice del libro
-     * @param l: lingua in cui è scritto il libro
+     * @param l: lingua in cui e' scritto il libro
      * @param g: genere del libro
      */
     public Libro(int licenze, String t, Vector <String> a, int np, int ap, String ce, String l, String g)

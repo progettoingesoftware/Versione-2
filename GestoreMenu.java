@@ -2,14 +2,9 @@ package it.ing.sw.v2.p2;
 
 import java.io.Serializable;
 import java.time.DateTimeException;
+
 import it.ing.sw.*;
-import it.ing.sw.v2.p1.Anagrafica;
-import it.ing.sw.v2.p1.AnagraficaFruitori;
-import it.ing.sw.v2.p1.AnagraficaOperatori;
-import it.ing.sw.v2.p1.Fruitore;
-import it.ing.sw.v2.p1.Menu;
-import it.ing.sw.v2.p1.Operatore;
-import it.ing.sw.v2.p1.Utente;
+import it.ing.sw.v2.p1.*;
 
 import java.time.*;
 
@@ -22,70 +17,6 @@ import java.time.*;
 public class GestoreMenu implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-	
-	public static final String SALUTO_INIZIALE = "Benvenuto nell'applicazione per la gestione di risorse multimediali\n";
-    public static final String SALUTO_FINALE = "Arrivederci, alla prossima!\n";
-    public static final String INTESTAZIONE_A = "IN QUALE MODALITA VUOI ACCEDERE?";
-	public static final String [] OPZIONI_A = {"Fruitore", "Operatore", "Esci"};
-	public static final String INTESTAZIONE_B = "SCEGLI UN'OPZIONE";
-	public static final String [] OPZIONI_B = {"Iscriviti come nuovo fruitore", "Accedi", "Indietro"};
-	public static final String INTESTAZIONE_C = "ACCESSO FRUITORE";
-	public static final String [] OPZIONI_C = {"Inserisci username e password", "Indietro"};
-	public static final String INTESTAZIONE_D= "COSA DESIDERI FARE?";
-	public static final String [] OPZIONI_D = {"Rinnova iscrizione", "Visualizza profilo", "Logout"};
-	public static final String INTESTAZIONE_E = "ACCESSO OPERATORE";
-	public static final String [] OPZIONI_E = {"Inserisci username e password", "Indietro"};
-	public static final String INTESTAZIONE_F = "COSA DESIDERI FARE?";
-	public static final String [] OPZIONI_F = {"Visualizza anagrafica fruitori", "Visualizza archivio", "Aggiungi risorsa", "Rimuovi risorsa", "Logout"};
-	
-    public static final String INS_NOME = "Inserisci il tuo nome: ";
-    public static final String INS_COGNOME = "Inserisci il tuo cognome: ";
-    public static final String INS_USERNAME = "Inserisci il tuo username: ";
-    public static final String INS_PASSWORD = "Inserisci la tua password: ";
-    public static final String INS_GIORNO_NASCITA = "Inserisci il tuo giorno di nascita (in cifre): ";
-    public static final String INS_MESE_NASCITA = "Inserisci il tuo mese di nascita (in cifre): ";
-    public static final String INS_ANNO_NASCITA = "Inserisci il tuo anno di nascita (indicare 4 cifre): ";
-
-    public static final String ISCRIZIONE_OK = "Complimenti, iscrizione avvenuta con successo!\n";
-    public static final String ISCRIZIONE_NON_OK = "Non e' stato possibile iscrivere alcun utente\n";
-    public static final String ISCRIZIONE_NON_OK_OMONIMIA_FRUITORI = "ATTENZIONE! Le credenziali inserite non sono valide poiche' gia' in uso.\n";
-    public static final String ISCRIZIONE_NON_OK_STESSO_USERNAME = "ATTENZIONE! Lo username indicato non e' valido poiche' gia' in uso.\n";
-    public static final String ISCRIZIONE_NON_OK_MAGGIORE_ETA = "ATTENZIONE! L'utente indicato non puo' iscriversi in quanto non e' maggiorenne.\n";
-
-    public static final String RINNOVO_OK = "Il rinnovo dell'iscrizione e' avvenuto con successo.\n";
-    public static final String RINNOVO_NON_OK = "Non e' possibile effettuare il rinnovo dell'iscrizione.\n";
-    
-    public static final String USERNAME = "Username: ";
-	public static final String PASSWORD = "Password: ";
-	public static final String CREDENZIALI_ERRATE = "ATTENZIONE! Lo username e/o la password non sono validi.\n";
-	public static final String DATA_DI_NASCITA_ERRATA = "ATTENZIONE! La data di nascita inserita non e' valida.\n";
-	
-	public static final String RICHIESTA_PROSECUZIONE = "Si desidera riprovare? (S/N)\n";
-	public static final String ERRORE = "Si e' verificato un errore\n";
-
-	public static final String CONTENUTO_ARC = "L'archivio contiene le seguenti categorie:\n%s\n";
-	public static final String CONTENUTO_CAT_RISORSA = "La categoria %s contiene queste risorse:\n%s\n";
-	public static final String CAT_SENZA_SOTTO = "La categoria %s non presenta sottocategorie in quanto contiene direttamente le risorse\n";
-	public static final String CONTENUTO_CAT_SOTTO = "La categoria %s contiene queste sottocategorie:\n%s\n";
-	public static final String CONTENUTO_SOTTO = "La sottocategoria %s contiene queste risorse:\n%s\n"; 
-	
-	public static final String OP_SUCCESSO = "L'operazione e' avvenuta con successo\n";
-    public static final String OP_NO_SUCCESSO_AGGIUNTA = "Attenzione! La risorsa e' gia' presente nell'archivio oppure la risorsa non e' compatibile con la sottocategoria dove si vuole inserire\n";
-
-    public static final String INS_NUMERO_CAT_AGGIUNTA_RISORSA = "Inserisci il numero della categoria a cui aggiungere la risorsa:\n";
-    public static final String INS_NUMERO_CAT_RIMOZIONE_RISORSA = "Inserisci il numero della categoria a cui rimuovere la risorsa:\n";
- 
-    public static final String INS_NUMERO_SOTTO_AGGIUNTA_RISORSA =  "Inserisci il numero della sottocategoria a cui aggiungere la risorsa:\n";
-    public static final String INS_NUMERO_SOTTO_RIMOZIONE_RISORSA =  "Inserisci il numero della sottocategoria a cui rimuovere la risorsa:\n";
-
-    public static final String INS_NUMERO_RISORSA_RIMOZIONE = "Inserisci il numero della risorsa da rimuovere:\n";
-    
-    public static final String INS_PROCEDERE_CAT = "Vuoi proseguire nella scelta della categoria (S/N)?\n";
-    public static final String INS_PROCEDERE_SOTTO = "Vuoi proseguire nella scelta della sottocategoria (S/N)?\n";
-    public static final String INS_PROCEDERE_RISORSA = "Vuoi proseguire nella scelta della risorsa? (S/N)\n";
-	
-    public static final int NUM_MINIMO = 1;
-    public static final int NULLO = 0;
 
     /**
 	 * Metodo di interazione con l'utente per l'aggiunta di un nuovo fruitore all'elenco dei fruitori gia' presenti all'interno di af.
@@ -102,9 +33,9 @@ public class GestoreMenu implements Serializable
 		String cognome = "";
 		String use = "";
 		String pwd = "";
-		int giorno = 0;
-		int mese = 0;
-		int anno = 0;
+		int giorno = Costanti.VUOTO;
+		int mese = Costanti.VUOTO;
+		int anno = Costanti.VUOTO;
 
 		boolean end = true;
 		
@@ -129,22 +60,22 @@ public class GestoreMenu implements Serializable
 	    	 */
 	    	if(ins_nome)
 	    	{
-				nome = InputDati.leggiStringaNonVuota(INS_NOME);
+				nome = InputDati.leggiStringaNonVuota(Costanti.INS_NOME);
 	    	}
 	    	
 	    	if(ins_cognome)
 	    	{
-				cognome = InputDati.leggiStringaNonVuota(INS_COGNOME);
+				cognome = InputDati.leggiStringaNonVuota(Costanti.INS_COGNOME);
 	    	}
 	    	
 	    	if(ins_use)
 	    	{
-				use = InputDati.leggiStringaNonVuota(INS_USERNAME);
+				use = InputDati.leggiStringaNonVuota(Costanti.INS_USERNAME);
 	    	}
 	    	
 	    	if(ins_pwd)
 	    	{
-				pwd = InputDati.leggiStringaNonVuota(INS_PASSWORD);
+				pwd = InputDati.leggiStringaNonVuota(Costanti.INS_PASSWORD);
 	    	}
 	    	
 			Fruitore f = null;	
@@ -162,9 +93,9 @@ public class GestoreMenu implements Serializable
 				{
 					if(ins_data)
 					{
-						giorno = InputDati.leggiIntero(INS_GIORNO_NASCITA);
-						mese = InputDati.leggiIntero(INS_MESE_NASCITA);
-						anno = InputDati.leggiIntero(INS_ANNO_NASCITA);
+						giorno = InputDati.leggiIntero(Costanti.INS_GIORNO_NASCITA);
+						mese = InputDati.leggiIntero(Costanti.INS_MESE_NASCITA);
+						anno = InputDati.leggiIntero(Costanti.INS_ANNO_NASCITA);
 					}
 					
 					f = new Fruitore(nome, cognome, anno, mese, giorno, use, pwd);
@@ -173,7 +104,7 @@ public class GestoreMenu implements Serializable
 				}
 				catch(DateTimeException e)
 				{
-					System.out.println(DATA_DI_NASCITA_ERRATA);
+					System.out.println(Costanti.DATA_DI_NASCITA_ERRATA);
 				}
 				
 			};
@@ -190,7 +121,7 @@ public class GestoreMenu implements Serializable
 			 */
 			if(af.verificaOmonimiaFruitori(f.getNome(), f.getCognome(), f.getDataDiNascita()) == true)
 			{
-				System.out.println(ISCRIZIONE_NON_OK_OMONIMIA_FRUITORI);
+				System.out.println(Costanti.ISCRIZIONE_NON_OK_OMONIMIA_FRUITORI);
 				ins_nome = true;
 				ins_cognome = true;
 				ins_data = true;
@@ -199,14 +130,14 @@ public class GestoreMenu implements Serializable
 			
 			if(af.verificaStessoUsername(f.getUsername()) == true)
 			{
-				System.out.println(ISCRIZIONE_NON_OK_STESSO_USERNAME);
+				System.out.println(Costanti.ISCRIZIONE_NON_OK_STESSO_USERNAME);
 				ins_use = true;
 				end = false;
 			}
 			
-			if(Period.between(f.getDataDiNascita(), LocalDate.now()).getYears() < 18)
+			if(Period.between(f.getDataDiNascita(), LocalDate.now()).getYears() < Costanti.MAGGIORE_ETA)
 			{
-				System.out.println(ISCRIZIONE_NON_OK_MAGGIORE_ETA);
+				System.out.println(Costanti.ISCRIZIONE_NON_OK_MAGGIORE_ETA);
 				ins_nome = true;
 				ins_cognome = true;
 				ins_data = true;
@@ -220,15 +151,15 @@ public class GestoreMenu implements Serializable
 			if(end)
 			{
 				af.aggiungiFruitore(f);
-				System.out.println(ISCRIZIONE_OK);
+				System.out.println(Costanti.ISCRIZIONE_OK);
 			}
 			else
 			{
 	
-				if(InputDati.leggiUpperChar(RICHIESTA_PROSECUZIONE, "SN") == 'N')
+				if(InputDati.leggiUpperChar(Costanti.RICHIESTA_PROSECUZIONE, "SN") == 'N')
 				{
 					end = true;				
-					System.out.println(ISCRIZIONE_NON_OK);
+					System.out.println(Costanti.ISCRIZIONE_NON_OK);
 				}
 				
 			}
@@ -256,8 +187,8 @@ public class GestoreMenu implements Serializable
 		
 	    do
 	    {
-			use = InputDati.leggiStringaNonVuota(USERNAME);
-			pwd = InputDati.leggiStringaNonVuota(PASSWORD);
+			use = InputDati.leggiStringaNonVuota(Costanti.USERNAME);
+			pwd = InputDati.leggiStringaNonVuota(Costanti.PASSWORD);
 
 			/**
 			 * Se viene effettivamente reperito l'utente indicato, l'accesso si conclude con successo.
@@ -270,9 +201,9 @@ public class GestoreMenu implements Serializable
 			}
 			else
 			{
-				System.out.println(CREDENZIALI_ERRATE);
+				System.out.println(Costanti.CREDENZIALI_ERRATE);
 				 
-				if(InputDati.leggiUpperChar(RICHIESTA_PROSECUZIONE, "SN") == 'N')
+				if(InputDati.leggiUpperChar(Costanti.RICHIESTA_PROSECUZIONE, "SN") == 'N')
 				{
 					end = true;
 				}
@@ -283,12 +214,11 @@ public class GestoreMenu implements Serializable
 		
 	    return ut;
 	}
-    
-    
+       
     /**
     * Metodo per l'aggiunta di una risorsa ad una (sotto)categoria dell'archivio
     * 
-    * Pre: (op != null) && (arc != null)
+    * Pre: (op != null) && (arc != null) && (arc.getElencoCategorie().size != 0)
     * 
     * @param op: l'operatore che effettua l'aggiunta della risorsa
     * @param arc: l'archivio a cui aggiungere la risorsa
@@ -299,70 +229,69 @@ public class GestoreMenu implements Serializable
     	SottoCategoria sc = null;
     	Libro nuovol = null;
     	     
-    	System.out.printf(CONTENUTO_ARC, arc.stampaElencoCategorie());
+    	System.out.printf(Costanti.CONTENUTO_ARC, arc.stampaElencoCategorie());
     	
-      	if(arc.getElencoCategorie().size() != NULLO  && InputDati.leggiUpperChar(INS_PROCEDERE_CAT, "SN") == 'S')
-    	{
-        	int num1 = InputDati.leggiIntero(INS_NUMERO_CAT_AGGIUNTA_RISORSA, NUM_MINIMO, (arc.getElencoCategorie()).size());
-        	c = (arc.getElencoCategorie()).get(num1-1);
+        int num1 = InputDati.leggiIntero(Costanti.INS_NUMERO_CAT_AGGIUNTA_RISORSA, Costanti.NUM_MINIMO, (arc.getElencoCategorie()).size());
+        c = (arc.getElencoCategorie()).get(num1-Costanti.NUM_MINIMO);
         
-          	if(c.getElencoSottoCategorie().size() == NULLO)
-        	{
-          		System.out.printf(CAT_SENZA_SOTTO, c.getNome());
+        if(c.getElencoSottoCategorie() == null)
+        {
+        	System.out.printf(Costanti.CAT_SENZA_SOTTO, c.getNome());
           	    
-          		if(InputDati.leggiUpperChar(INS_PROCEDERE_CAT, "SN") == 'S')
+          	if(InputDati.leggiUpperChar(Costanti.INS_PROCEDERE_CAT, "SN") == 'S')
+          	{
+          		if((c.getNome()).equalsIgnoreCase("Libri"))  
           		{
-          			if((c.getNome()).equalsIgnoreCase("Libri"))  
+          			nuovol = InserimentoRisorsa.inserisciLibro();
+        	    	    	    	    	       
+          			if(c.getRisorsa(nuovol.getTitolo()) == null )
           			{
-          				nuovol = InserimentoRisorsa.inserisciLibro();
-        	    	    	    	    	       
-          				if(c.getRisorsa(nuovol.getNome()) == null )
-          				{
-          					op.aggiungiRisorsaCategoria(nuovol, c);
-          					System.out.println(OP_SUCCESSO);
-          				}
-          				else
-          					System.out.println(OP_NO_SUCCESSO_AGGIUNTA);
+          				op.aggiungiRisorsaCategoria(nuovol, c);
+          				System.out.println(Costanti.OP_SUCCESSO);
           			}
-          			
+          			else
+          				System.out.println(Costanti.OP_NO_SUCCESSO_AGGIUNTA);
           		}
+          			
+          	}
           	    
-        	}
-        	else
-        	{
-            	System.out.printf(CONTENUTO_CAT_SOTTO, c.getNome(), c.stampaElencoSottocategorie());
+        }
+        else if(c.getElencoSottoCategorie().size() == Costanti.VUOTO)
+        {
+        	System.out.printf(Costanti.CONTENUTO_ELENCO_SOTTO_VUOTO, c.getNome());
+        }
+        else
+        {
+        	System.out.printf(Costanti.CONTENUTO_CAT_SOTTO, c.getNome(), c.stampaElencoSottocategorie());
             	
-            	if(InputDati.leggiUpperChar(INS_PROCEDERE_SOTTO, "SN") == 'S')
-            	{	 
-            		int num2 = InputDati.leggiIntero(INS_NUMERO_SOTTO_AGGIUNTA_RISORSA, NUM_MINIMO, (c.getElencoSottoCategorie()).size());
-            		sc = (c.getElencoSottoCategorie()).get(num2-1);
+            if(InputDati.leggiUpperChar(Costanti.INS_PROCEDERE_SOTTO, "SN") == 'S')
+            {	 
+            	int num2 = InputDati.leggiIntero(Costanti.INS_NUMERO_SOTTO_AGGIUNTA_RISORSA, Costanti.NUM_MINIMO, (c.getElencoSottoCategorie()).size());
+            	sc = (c.getElencoSottoCategorie()).get(num2-Costanti.NUM_MINIMO);
         	    	    	    	    	    
-            		if((c.getNome()).equalsIgnoreCase("Libri"))  
-            		{
-            			nuovol = InserimentoRisorsa.inserisciLibro();
+            	if((c.getNome()).equalsIgnoreCase("Libri"))  
+            	{
+            		nuovol = InserimentoRisorsa.inserisciLibro();
         	    	    	    	    	       
-      	    	   		if( (sc.getRisorsa(nuovol.getTitolo()) == null) && (nuovol.getGenere()).equalsIgnoreCase(sc.getNome()) )
-      	    	   		{
-      	    	   			op.aggiungiRisorsaCategoria(nuovol, sc);
-      	    	   			System.out.println(OP_SUCCESSO);
-      	    	   		}
-      	    	   		else
-      	    	   			System.out.println(OP_NO_SUCCESSO_AGGIUNTA);
-            		}
-            	
+      	    	   	if( (sc.getRisorsa(nuovol.getTitolo()) == null) && (nuovol.getGenere()).equalsIgnoreCase(sc.getNome()) )
+      	    	   	{
+      	    	   		op.aggiungiRisorsaCategoria(nuovol, sc);
+      	    	   		System.out.println(Costanti.OP_SUCCESSO);
+      	    	   	}
+      	    	   	else
+      	    	   		System.out.println(Costanti.OP_NO_SUCCESSO_AGGIUNTA);
             	}
+            	
+            }
         	    
-        	}
+        }
           	
-    	}
-    	
-    	
     }
     
     /**
      * Metodo per la rimozione di una risorsa da una (sotto)categoria dell'archivio
      * 
-     * Pre: (op != null) && (arc != null)
+     * Pre: (op != null) && (arc != null) && (arc.getElencoCategorie().size != 0)
      * 
      * @param op: l'operatore che effettua la rimozione della risorsa
      * @param arc: l'archivio da cui rimuovere la risorsa
@@ -373,54 +302,72 @@ public class GestoreMenu implements Serializable
 	    SottoCategoria sc = null;
 	    Risorsa daEliminare = null;
 	    
-	    System.out.printf(CONTENUTO_ARC, arc.stampaElencoCategorie());
+	    System.out.printf(Costanti.CONTENUTO_ARC, arc.stampaElencoCategorie());
 	    
-	  	if(arc.getElencoCategorie().size() != NULLO && InputDati.leggiUpperChar(INS_PROCEDERE_CAT, "SN") == 'S')
-    	{
-        	int num1 = InputDati.leggiIntero(INS_NUMERO_CAT_RIMOZIONE_RISORSA, NUM_MINIMO, (arc.getElencoCategorie()).size());
-        	c = (arc.getElencoCategorie()).get(num1-1);
+	    int num1 = InputDati.leggiIntero(Costanti.INS_NUMERO_CAT_RIMOZIONE_RISORSA, Costanti.NUM_MINIMO, (arc.getElencoCategorie()).size());
+        c = (arc.getElencoCategorie()).get(num1-Costanti.NUM_MINIMO);
     	
-        	if(c.getElencoSottoCategorie().size() == NULLO)
-    	    {
-    	    	   System.out.printf(CONTENUTO_CAT_RISORSA, c.getNome(), c.stampaElencoRisorse());
-    	    	   
-    	    	   if(InputDati.leggiUpperChar(INS_PROCEDERE_RISORSA, "SN") == 'S')
-    	    	   {
-    		    	   int num3 = InputDati.leggiIntero(INS_NUMERO_RISORSA_RIMOZIONE, NUM_MINIMO, (c.getElencoRisorse()).size());
-    		    	   daEliminare = (c.getElencoRisorse()).get(num3-1);
-    		    	   op.rimuoviRisorsaCategoria(daEliminare, c);
-    	    	   }
+        if(c.getElencoSottoCategorie() == null)
+    	{
+        	if((c.getElencoRisorse()).size() != Costanti.VUOTO)
+        	{
+        		System.out.printf(Costanti.CAT_SENZA_SOTTO, c.getNome());
+        		System.out.printf(Costanti.CONTENUTO_CAT_RISORSA, c.getNome(), c.stampaElencoRisorse());
+
+        		if(InputDati.leggiUpperChar(Costanti.INS_PROCEDERE_RISORSA, "SN") == 'S')
+    	    	{
+        			int num2 = InputDati.leggiIntero(Costanti.INS_NUMERO_RISORSA_RIMOZIONE, Costanti.NUM_MINIMO, (c.getElencoRisorse()).size());
+    		    	daEliminare = (c.getElencoRisorse()).get(num2-Costanti.NUM_MINIMO);
+    		    	op.rimuoviRisorsaCategoria(daEliminare, c);
+            		System.out.println(Costanti.OP_SUCCESSO);
+    	    	}
 
     	    } 
       	    else
     	    {
-      	       	System.out.printf(CONTENUTO_CAT_SOTTO, c.getNome(), c.stampaElencoSottocategorie());
-      	       		
-      	       	 if(InputDati.leggiUpperChar(INS_PROCEDERE_SOTTO, "SN") == 'S')
-      	       	 {
-    	    	   int num2 = InputDati.leggiIntero(INS_NUMERO_SOTTO_RIMOZIONE_RISORSA, NUM_MINIMO, (c.getElencoSottoCategorie()).size());
-    	    	   sc = (c.getElencoSottoCategorie()).get(num2-1);
-
-    	    	   System.out.printf(CONTENUTO_SOTTO, sc.getNome(), sc.stampaElencoRisorse());
-    	    	   
-    	    	   if(sc.getElencoRisorse().size() != NULLO && InputDati.leggiUpperChar(INS_PROCEDERE_RISORSA, "SN") == 'S')
-    	    	   {
-    	    		   int num3 = InputDati.leggiIntero(INS_NUMERO_RISORSA_RIMOZIONE, NUM_MINIMO, (sc.getElencoRisorse()).size());
-    	    		   daEliminare = (sc.getElencoRisorse()).get(num3-1);
-    	    		   op.rimuoviRisorsaCategoria(daEliminare, sc);
-    	    	   }
-    	    	 
-      	       	 }
-    	    	   
-    	    }   
-  	    
+        		System.out.printf(Costanti.CONTENUTO_ELENCO_RISORSE_CAT_VUOTO, c.getNome());
+    	    }
+        
     	}
-    	
+        else if((c.getElencoSottoCategorie()).size() == Costanti.VUOTO)
+        {
+  	       	System.out.printf(Costanti.CONTENUTO_ELENCO_SOTTO_VUOTO, c.getNome());
+        }
+        else
+        {
+        	System.out.printf(Costanti.CONTENUTO_CAT_SOTTO, c.getNome(), c.stampaElencoSottocategorie());
+      	       		
+      	    if(InputDati.leggiUpperChar(Costanti.INS_PROCEDERE_SOTTO, "SN") == 'S')
+      	    {
+      	    	int num2 = InputDati.leggiIntero(Costanti.INS_NUMERO_SOTTO_RIMOZIONE_RISORSA, Costanti.NUM_MINIMO, (c.getElencoSottoCategorie()).size());
+    	    	sc = (c.getElencoSottoCategorie()).get(num2-Costanti.NUM_MINIMO);
+    	    	   
+    	    	if(sc.getElencoRisorse().size() != Costanti.VUOTO)
+    	    	{
+    	           	System.out.printf(Costanti.CONTENUTO_SOTTO, sc.getNome(), sc.stampaElencoRisorse());
+    	           	
+    	      	    if(InputDati.leggiUpperChar(Costanti.INS_PROCEDERE_RISORSA, "SN") == 'S')
+    	      	    {
+    	      	    	int num3 = InputDati.leggiIntero(Costanti.INS_NUMERO_RISORSA_RIMOZIONE, Costanti.NUM_MINIMO, (sc.getElencoRisorse()).size());
+        	    		daEliminare = (sc.getElencoRisorse()).get(num3-Costanti.NUM_MINIMO);
+        	    		op.rimuoviRisorsaCategoria(daEliminare, sc);
+        	           	System.out.println(Costanti.OP_SUCCESSO);
+    	      	    }
+    	    		
+    	    	}
+    	    	else
+    	    		System.out.printf(Costanti.CONTENUTO_ELENCO_RISORSE_SOTTO_VUOTO, sc.getNome());
+	 
+      	    }
+
+      	    	 	   
+        }   
+  	    
     }
     
     /**
      * Vengono inizialmente creati i vari menu' con le relative intestazioni ed opzioni. 
-     * In seguito l'andamento del programma Ã¨ scandito attraverso l'aggiornamento della variabile letteraMenu e l'uso di switch-case innestati,
+     * In seguito l'andamento del programma e' scandito attraverso l'aggiornamento della variabile letteraMenu e l'uso di switch-case innestati,
      * in cui il primo livello (contraddistinto dalle variabili letterali) indica gli specifici menu', mentre il secondo livello (evidenziato
      * dall'uso della variabile intera 'scelta') indica le opzioni relative ad ogni menu' e le operazioni che vengono indi svolte
      * 
@@ -434,21 +381,21 @@ public class GestoreMenu implements Serializable
      */
     public void logicaMenu(AnagraficaFruitori af, AnagraficaOperatori ao, Archivio arc)
     {
-     	Menu a = new Menu(INTESTAZIONE_A, OPZIONI_A);
-	    Menu b = new Menu(INTESTAZIONE_B, OPZIONI_B);
-	    Menu c = new Menu(INTESTAZIONE_C, OPZIONI_C);
-	    Menu d = new Menu(INTESTAZIONE_D, OPZIONI_D);
-	    Menu e = new Menu(INTESTAZIONE_E, OPZIONI_E);
-	    Menu f = new Menu(INTESTAZIONE_F, OPZIONI_F);
+		Menu a = new Menu(Costanti.INTESTAZIONE_A, Costanti.OPZIONI_A);
+		Menu b = new Menu(Costanti.INTESTAZIONE_B, Costanti.OPZIONI_B);
+		Menu c = new Menu(Costanti.INTESTAZIONE_C, Costanti.OPZIONI_C);
+		Menu d = new Menu(Costanti.INTESTAZIONE_D, Costanti.OPZIONI_D_12);
+		Menu e = new Menu(Costanti.INTESTAZIONE_E, Costanti.OPZIONI_E);
+		Menu f = new Menu(Costanti.INTESTAZIONE_F, Costanti.OPZIONI_F_2);
     	
       	boolean esci = false;
       	char letteraMenu =  'a';
-        int scelta = 0;
+        int scelta = Costanti.VUOTO;
         
         Fruitore attualef = null;
         Operatore attualeop = null;
        
-        System.out.println(SALUTO_INIZIALE);
+        System.out.println(Costanti.SALUTO_INIZIALE);
           
         do
         {
@@ -458,150 +405,158 @@ public class GestoreMenu implements Serializable
     	    {
     	      	case('a'):
     	        {
-    	    		   scelta = a.scegli();
+    	      		scelta = a.scegli();
 	        	     
-    	    		   switch(scelta)
-	        	   {
-	        	     	case 1: letteraMenu = 'b';
+    	    		switch(scelta)
+    	    		{
+	        	    	case 1: letteraMenu = 'b';
 	        	                break;
   	        	
 	        	        case 2: letteraMenu = 'e';
   	                    		break;
   	                    		
 	        	        case 3: esci = true;
-	        	        		    break;
+	        	        		break;
 	        	    }
-    	    		    break;
+    	    		    
+    	    		break;
     	        }
     	          
-    	        case('b'):
-    	        {
-    	          	scelta = b.scegli();
-	        	     
-	        	    switch(scelta)
-	        	    {
-	        	    	    case 1: iscrizione(af);
-	        	                letteraMenu = 'a';
-	        	                break;
-  	        	
-	        	        case 2: letteraMenu = 'c';
-  	                    		break;
-  	                    		
-	        	        case 3: letteraMenu = 'a';
-                  		    break;
-	        	    }
-	        	    break;
-    	        }
+				case ('b'): 
+				{
+					scelta = b.scegli();
+
+					switch (scelta) 
+					{
+						case 1: iscrizione(af);
+								letteraMenu = 'a';
+								break;
+
+						case 2: letteraMenu = 'c';
+								break;
+
+						case 3: letteraMenu = 'a';
+								break;
+					}
+
+					break;
+				}
     	          
-    	        case('c'):
-    	        {
-    	          	scelta = c.scegli();
-    	        	     
-    	         	switch(scelta)
-    	        	    {
-    	        		     case 1: attualef = (Fruitore) accesso(af);
-        	        	        
-    	                         if(attualef != null)
-    	        				     {
-    	        					     letteraMenu = 'd';
-    	        				     }
-    	        				     else
-    	        				     {
-    	        					     System.out.println(ERRORE);
-    	        					     letteraMenu = 'c';
-    	        				     }
-    	        				     break;
-      	        	
-    	        	         case 2: letteraMenu = 'b';
-	        	        			break;
-    	        	     }
-    	         	 break;
-    	        }
+				case ('c'): 
+				{
+					scelta = c.scegli();
+
+					switch (scelta) 
+					{
+						case 1: attualef = (Fruitore) accesso(af);
+
+								if (attualef != null) 
+								{
+									letteraMenu = 'd';
+								} 
+								else 
+								{
+									System.out.println(Costanti.ERRORE);
+									letteraMenu = 'c';
+								}
+
+								break;
+
+						case 2: letteraMenu = 'b';
+								break;
+					}
+
+					break;
+				}
     	          
-    	        case('d'):
-    	        {
-    	         	scelta = d.scegli();
- 	        	     
- 	        	    switch(scelta)
- 	        	    {
- 	        	         case 1: if(attualef.rinnovaIscrizione())
- 	        	                     	System.out.println(RINNOVO_OK);
- 	        	                 else
- 	        	                  	    System.out.println(RINNOVO_NON_OK);
-     	        				
- 	        	                 letteraMenu = 'd';
- 	        	                 break;
- 	        	                
- 	        	        case 2: System.out.println(attualef.toString());
- 	        	        		    letteraMenu = 'd';
- 	        	                break;
- 	        	        	
- 	        	        case 3: letteraMenu = 'a';
- 	        	        		attualef = null;
- 	        	                break;
- 	        	    }
- 	        	    break;
-    	        }
+				case ('d'): 
+				{
+					scelta = d.scegli();
+
+					switch (scelta) 
+					{
+						case 1: if (attualef.rinnovaIscrizione())
+									System.out.println(Costanti.RINNOVO_OK);
+								else
+									System.out.println(Costanti.RINNOVO_NON_OK);
+
+								letteraMenu = 'd';
+								break;
+
+						case 2: System.out.println(attualef.toString());
+								letteraMenu = 'd';
+								break;
+
+						case 3: letteraMenu = 'a';
+								attualef = null;
+								break;
+					}
+
+					break;
+				}
     	        
-    	        case('e'):
-    	        {
-    	        	    scelta = e.scegli();
- 	        	     
- 	        	    switch(scelta)
- 	        	    {
- 	        	    	     case 1: attualeop = (Operatore) accesso(ao);
- 	        	    				
- 	                         if(attualeop != null)
- 	        	    			     {
- 	        	    				    letteraMenu = 'f';
- 	        	    			     }
- 	        	    			     else
- 	        	    			     {
- 	        	    				    System.out.println(ERRORE);
- 	        	    				    letteraMenu = 'e';
- 	        	    			     }
- 	        	    	             break;
- 	        	                
- 	        	        case 2: letteraMenu = 'a';
- 	        	                break;
- 	        	    }
- 	        	    break;
-    	        }
-    	        
-    	        case('f'):
-    	        {
-    	        	     scelta = f.scegli();
- 	        	     
- 	        	     switch(scelta)
- 	        	     {
-	        	     	case 1: System.out.println(attualeop.visualizzaElencoFruitori(af));
-     	     					letteraMenu = 'f';
-     	     					break;
-     	                
+				case ('e'): 
+				{
+					scelta = e.scegli();
+
+					switch (scelta) 
+					{
+						case 1: attualeop = (Operatore) accesso(ao);
+
+								if (attualeop != null) 
+								{
+									letteraMenu = 'f';
+								}
+								else 
+								{
+									System.out.println(Costanti.ERRORE);
+									letteraMenu = 'e';
+								}
+
+								break;
+
+						case 2: letteraMenu = 'a';
+								break;
+					}
+
+					break;
+				}
+
+				case ('f'):
+				{
+					scelta = f.scegli();
+
+					switch (scelta)
+					{
+						case 1: System.out.println(attualeop.visualizzaElencoFruitori(af));
+								letteraMenu = 'f';
+								break;
+
 	        	     	case 2: System.out.println(attualeop.visualizzaArchivio(arc));
+	     	        			letteraMenu = 'f';
+	     	        			break;
+	     	        		
+	        	     	case 3: aggiungiRisorsa(attualeop, arc);
      	     	        		letteraMenu = 'f';
      	     	        		break;
-     	     	        		
- 	        	     	case 3: aggiungiRisorsa(attualeop, arc);
- 	        	     	        letteraMenu = 'f';
- 	        	     	        break;
- 	        	     		
- 	        	     	case 4: rimuoviRisorsa(attualeop, arc);
- 	        	     	        letteraMenu = 'f';
- 	        	     	        break;
- 	        	     	    
- 	        	        case 5: letteraMenu = 'a';
-	        					attualeop = null;
- 	        	                break;
- 	        	     }
- 	        	     break;
-    	        }
+     	     		
+	        	     	case 4: rimuoviRisorsa(attualeop, arc);
+     	     	        		letteraMenu = 'f';
+     	     	        		break;
+     	     	    
+	        	     	case 5: letteraMenu = 'a';
+	        	     			attualeop = null;
+	        	     			break;
+					}
+
+					break;
+				}
     	        
     	    }
     	      
        }while(!esci);   
        
-       System.out.println(SALUTO_FINALE);       
+       System.out.println(Costanti.SALUTO_FINALE);       
     }
      
 }

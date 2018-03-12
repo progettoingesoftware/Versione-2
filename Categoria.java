@@ -77,19 +77,19 @@ public class Categoria implements Serializable
    }
    
    /**
-    * Data una stringa n, questo metodo restituisce l'oggetto Risorsa avente n come nome, se e' presente
+    * Data una stringa t, questo metodo restituisce l'oggetto Risorsa avente t come nome, se e' presente
     * 
     * Pre: elencoRisorse != null
     * 
-    * @param n: il nome identificativo di una risorsa
-    * @return l'oggetto Risorsa avente n come nome altrimenti null
+    * @param t: il titolo identificativo di una risorsa
+    * @return l'oggetto Risorsa avente t come titolo altrimenti null
     */
-   public Risorsa getRisorsa(String n)
+   public Risorsa getRisorsa(String t)
    {
 	   for(int i = 0; i < elencoRisorse.size(); i++)
 	   {
 		   Risorsa r = elencoRisorse.get(i);
-		   if(r.getNome().equalsIgnoreCase(n))
+		   if(r.getTitolo().equalsIgnoreCase(t))
 			   return r;
 	   }
 	   
@@ -136,11 +136,11 @@ public class Categoria implements Serializable
    }
    
    /**
-    * Metodo per la semplice stampa dell'elenco dei nomi delle risorse contenuti in elencoRisorse
+    * Metodo per la semplice stampa dell'elenco dei titoli delle risorse contenuti in elencoRisorse
     *
     * Pre: elencoRisorse != null
     * 
-    * @return la stringa con l'elenco dei nomi delle risorse
+    * @return la stringa con l'elenco dei titoli delle risorse
     */
    public String stampaElencoRisorse()
    {
@@ -149,7 +149,7 @@ public class Categoria implements Serializable
  	   for(int i = 0; i < elencoRisorse.size(); i++)
  	   {
  		   Risorsa r = elencoRisorse.get(i);
- 		   ris.append(i+1 + ")"+ r.getNome() + "\n");
+ 		   ris.append(i+1 + ")"+ r.getTitolo() + "\n");
  	   }
  	   
  	   return ris.toString();

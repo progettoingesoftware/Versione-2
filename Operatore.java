@@ -22,7 +22,7 @@ public class Operatore extends Utente implements Serializable
      */
     public Operatore(String n, String c, String u, String p)
     {
-   	     super(n, c, u, p);
+   	    super(n, c, u, p);
     }
     
     /**
@@ -35,7 +35,7 @@ public class Operatore extends Utente implements Serializable
      */
     public String visualizzaElencoFruitori(AnagraficaFruitori e)
     {
-   	     return e.toString();
+   	    return e.toString();
     }
     
     /**
@@ -49,7 +49,7 @@ public class Operatore extends Utente implements Serializable
      */
     public void aggiungiRisorsaCategoria(Risorsa r, Categoria s)
     {
-    	    s.aggiungiRisorsa(r);
+    	s.aggiungiRisorsa(r);
     }
     
     /**
@@ -63,7 +63,7 @@ public class Operatore extends Utente implements Serializable
      */
     public void rimuoviRisorsaCategoria(Risorsa r, Categoria s)
     {
-    	    s.rimuoviRisorsa(r);
+        s.rimuoviRisorsa(r);
     }
     
     /**
@@ -76,7 +76,7 @@ public class Operatore extends Utente implements Serializable
      */
     public String visualizzaArchivio(Archivio a)
     {
-    	     return a.toString();
+    	return a.toString();
     }
     
 }
