@@ -1,9 +1,10 @@
-package it.ing.sw.v2.p2;
+package interazione_2;
 
 import java.io.Serializable;
 import java.util.Vector;
 
-import it.ing.sw.v2.p1.*;
+import dominio_2.*;
+import logica_2.*;
 
 /**
  * Qusta classe contiene dei metodi per la creazione della struttura preimpostata di alcuni aspetti del sistema

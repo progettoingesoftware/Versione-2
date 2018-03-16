@@ -1,4 +1,4 @@
-package it.ing.sw.v2.p2;
+package dominio_2;
 
 import java.io.Serializable;
 import java.util.Vector;

@@ -1,9 +1,10 @@
-package it.ing.sw.v2.p2;
+package interazione_2;
 
 import java.io.Serializable;
 
-import it.ing.sw.v2.p1.AnagraficaFruitori;
-import it.ing.sw.v2.p1.AnagraficaOperatori;
+import logica_2.AnagraficaFruitori;
+import logica_2.AnagraficaOperatori;
+import logica_2.Archivio;
 
 /**
  * Questa classe rappresenta un raccoglitore di dati, utile per la memorizzazione su file

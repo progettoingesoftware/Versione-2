@@ -1,4 +1,4 @@
-package it.ing.sw.v2.p1;
+package logica_2;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -89,21 +89,19 @@ public class Fruitore extends Utente implements Serializable
      */ 
     public boolean rinnovaIscrizione()
     {
+     	if((LocalDate.now().isBefore(dataDiScadenza))) 
+		{
+			LocalDate ld = dataDiScadenza.minusDays(DIECI_GIORNI);
+			
+			if((LocalDate.now().equals(ld)) || (LocalDate.now().isAfter(ld))) 
+			{
+				setDataDiScadenza(dataDiScadenza.plusYears(Fruitore.TERMINE_SCADENZA));
+				return true;
+			}
+		}
 
-    	if((LocalDate.now().isBefore(dataDiScadenza)))
-   	 	{
-    		
-    		if((LocalDate.now().isAfter(dataDiScadenza.minusDays(DIECI_GIORNI))))
-       	 	{
-   	 			setDataDiScadenza(LocalDate.now().plusYears(Fruitore.TERMINE_SCADENZA));
-   	 			return true;
-       	 	}
-    		
-   	 	}
-    	
-   	 	return false;  
-   	 				
-   	 }
+		return false;  			
+   	}
     
     /**
      * Metodo toString() ereditato dalla classe String per la creazione di una stringa descrittiva contenente i vari attributi dell'oggetto Fruitore

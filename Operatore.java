@@ -1,10 +1,9 @@
-package it.ing.sw.v2.p1;
+package logica_2;
 
 import java.io.Serializable;
 
-import it.ing.sw.v2.p2.Archivio;
-import it.ing.sw.v2.p2.Categoria;
-import it.ing.sw.v2.p2.Risorsa;
+import dominio_2.Categoria;
+import dominio_2.Risorsa;
 
 /**
  * Questa classe rappresenta il modello di un Operatore

@@ -1,18 +1,18 @@
-package it.ing.sw.v2.p2;
+package interazione_2;
 
 import java.io.Serializable;
 import java.time.DateTimeException;
 
-import it.ing.sw.*;
-import it.ing.sw.v2.p1.*;
+import dominio_2.*;
+import logica_2.*;
+import utility.*;
 
 import java.time.*;
 
 /**
- * Questa classe permette una corretta gestione dell'uso dei menu'. E' essenzialmente suddivisa in tre parti:
- * 1 - Elenco delle costanti che costituiscono le intestazioni dei menu' e le varie opzioni che li compongono
- * 2 - Metodi ausiliari per la gestione delle funzionalita' basilari del software (iscrizione, accesso)
- * 3 - Metodo logicaMenu per la realizzazione delle connessioni tra i vari menu'
+ * Questa classe permette una corretta gestione dell'uso dei menu'. E' essenzialmente suddivisa in due parti:
+ * 1 - Metodi ausiliari per la gestione delle funzionalita' basilari del software (iscrizione, accesso)
+ * 2 - Metodo logicaMenu per la realizzazione delle connessioni tra i vari menu'
  */
 public class GestoreMenu implements Serializable
 {
@@ -240,7 +240,7 @@ public class GestoreMenu implements Serializable
           	    
           	if(InputDati.leggiUpperChar(Costanti.INS_PROCEDERE_CAT, "SN") == 'S')
           	{
-          		if((c.getNome()).equalsIgnoreCase("Libri"))  
+          		if((c.getNome()).equalsIgnoreCase(Costanti.LIBRI))  
           		{
           			nuovol = InserimentoRisorsa.inserisciLibro();
         	    	    	    	    	       
@@ -250,7 +250,7 @@ public class GestoreMenu implements Serializable
           				System.out.println(Costanti.OP_SUCCESSO);
           			}
           			else
-          				System.out.println(Costanti.OP_NO_SUCCESSO_AGGIUNTA);
+          				System.out.println(Costanti.OP_NO_SUCCESSO_AGGIUNTA_1);
           		}
           			
           	}
@@ -269,17 +269,23 @@ public class GestoreMenu implements Serializable
             	int num2 = InputDati.leggiIntero(Costanti.INS_NUMERO_SOTTO_AGGIUNTA_RISORSA, Costanti.NUM_MINIMO, (c.getElencoSottoCategorie()).size());
             	sc = (c.getElencoSottoCategorie()).get(num2-Costanti.NUM_MINIMO);
         	    	    	    	    	    
-            	if((c.getNome()).equalsIgnoreCase("Libri"))  
+            	if((c.getNome()).equalsIgnoreCase(Costanti.LIBRI))  
             	{
             		nuovol = InserimentoRisorsa.inserisciLibro();
+            		
+            		if(!(c.verificaPresenza(nuovol.getTitolo())))
+            		{
         	    	    	    	    	       
-      	    	   	if( (sc.getRisorsa(nuovol.getTitolo()) == null) && (nuovol.getGenere()).equalsIgnoreCase(sc.getNome()) )
-      	    	   	{
-      	    	   		op.aggiungiRisorsaCategoria(nuovol, sc);
-      	    	   		System.out.println(Costanti.OP_SUCCESSO);
-      	    	   	}
-      	    	   	else
-      	    	   		System.out.println(Costanti.OP_NO_SUCCESSO_AGGIUNTA);
+      	    	   		if( (nuovol.getGenere()).equalsIgnoreCase(sc.getNome()) )
+      	    	   		{
+      	    	   			op.aggiungiRisorsaCategoria(nuovol, sc);
+      	    	   			System.out.println(Costanti.OP_SUCCESSO);
+      	    	   		}
+      	    	   		else
+      	    	   			System.out.println(Costanti.OP_NO_SUCCESSO_AGGIUNTA_2);
+            		}
+            		else
+            			System.out.println(Costanti.OP_NO_SUCCESSO_AGGIUNTA_1);
             	}
             	
             }
@@ -419,6 +425,7 @@ public class GestoreMenu implements Serializable
 	        	        		break;
 	        	    }
     	    		    
+    	        	af.decadenzaFruitore();
     	    		break;
     	        }
     	          
@@ -439,6 +446,7 @@ public class GestoreMenu implements Serializable
 								break;
 					}
 
+		        	af.decadenzaFruitore();
 					break;
 				}
     	          
@@ -466,6 +474,7 @@ public class GestoreMenu implements Serializable
 								break;
 					}
 
+		        	af.decadenzaFruitore();
 					break;
 				}
     	          
@@ -492,6 +501,7 @@ public class GestoreMenu implements Serializable
 								break;
 					}
 
+		        	af.decadenzaFruitore();
 					break;
 				}
     	        
@@ -519,6 +529,7 @@ public class GestoreMenu implements Serializable
 								break;
 					}
 
+		        	af.decadenzaFruitore();
 					break;
 				}
 
@@ -549,6 +560,7 @@ public class GestoreMenu implements Serializable
 	        	     			break;
 					}
 
+		        	af.decadenzaFruitore();
 					break;
 				}
     	        

@@ -1,4 +1,4 @@
-package it.ing.sw.v2.p2;
+package dominio_2;
 
 import java.io.Serializable;
 import java.util.Vector;
@@ -133,6 +133,37 @@ public class Categoria implements Serializable
    public void aggiungiSottoCategoria(SottoCategoria sc)
    {
 	   elencoSottoCategorie.add(sc);
+   }
+   
+   /**
+    * Metodo che dato una stringa t che rappresenta il titolo della nuova risorsa da inserire in archivio, verifica 
+    * se all'interno della categoria associata alla nuova risorsa sia già presente una risorsa con lo stesso titolo
+    * 
+    * Pre: elencoSottoCategorie != null  && elencoRisorse != null
+    * 
+    * @param t: il titolo della vuova risorsa da inserire
+    * @return true se è già presente una risorsa con il titolo della nuova risorsa da inserire
+    */
+   public boolean verificaPresenza(String t)
+   {
+	  boolean presente = false;
+	   
+	  for(int i = 0; i < elencoSottoCategorie.size(); i++)
+	  {
+		  SottoCategoria sc = elencoSottoCategorie.get(i);
+		  
+		  for(int j = 0; j < sc.getElencoRisorse().size(); j++)
+		  {
+			  Risorsa r = sc.getElencoRisorse().get(j);
+			  
+			  if(r.getTitolo().equalsIgnoreCase(t))
+			  {
+				  presente = true;
+				  break;
+			  }	   
+		  }
+	   }
+	   return presente;
    }
    
    /**
