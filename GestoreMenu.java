@@ -116,19 +116,19 @@ public class GestoreMenu implements Serializable
 			ins_data = false;
 
 			/**
-			 * I metodi di controllo verificano se non vi sono casi di omonimia tra diversi fruitori, se non vi sono casi di condivisione di username
+			 * I metodi di controllo verificano se un utente gia' iscritto cerca di iscriversi nuovamente, se non vi sono casi di condivisione di username
 			 * e se l'utente e' maggiorenne. In caso di inesattezze vengono reimpostati i parametri di inserimento e viene impedita la fuoriuscita dal ciclo globale
 			 */
-			if(af.verificaOmonimiaFruitori(f.getNome(), f.getCognome(), f.getDataDiNascita()) == true)
+			if(af.verificaPresenza(f.getNome(), f.getCognome(), f.getDataDiNascita()))
 			{
-				System.out.println(Costanti.ISCRIZIONE_NON_OK_OMONIMIA_FRUITORI);
+				System.out.println(Costanti.ISCRIZIONE_NON_OK_FRUITORE_GIA_ISCRITTO);
 				ins_nome = true;
 				ins_cognome = true;
 				ins_data = true;
 				end = false;
 			}
 			
-			if(af.verificaStessoUsername(f.getUsername()) == true)
+			if(af.verificaStessoUsername(f.getUsername()))
 			{
 				System.out.println(Costanti.ISCRIZIONE_NON_OK_STESSO_USERNAME);
 				ins_use = true;
