@@ -372,6 +372,18 @@ public class GestoreMenu implements Serializable
     }
     
     /**
+     * Metodo di interazione con l'utente per la conferma della richiesta di logout
+     * @return boolean : true se l'utente conferma il logout
+     */
+    public boolean richiestaLogout()
+    {
+    	if(InputDati.leggiUpperChar(Costanti.RICHIESTA_LOGOUT, "SN") == 'S')
+    		return true;
+    	else
+    		return false;
+    }
+    
+    /**
      * Vengono inizialmente creati i vari menu' con le relative intestazioni ed opzioni. 
      * In seguito l'andamento del programma e' scandito attraverso l'aggiornamento della variabile letteraMenu e l'uso di switch-case innestati,
      * in cui il primo livello (contraddistinto dalle variabili letterali) indica gli specifici menu', mentre il secondo livello (evidenziato
@@ -496,8 +508,15 @@ public class GestoreMenu implements Serializable
 								letteraMenu = 'd';
 								break;
 
-						case 3: letteraMenu = 'a';
-								attualef = null;
+						case 3: if(richiestaLogout())
+								{
+									letteraMenu = 'a';
+									attualef = null;
+								}
+								else
+								{
+									letteraMenu = 'd';
+								}
 								break;
 					}
 
@@ -555,8 +574,15 @@ public class GestoreMenu implements Serializable
      	     	        		letteraMenu = 'f';
      	     	        		break;
      	     	    
-	        	     	case 5: letteraMenu = 'a';
-	        	     			attualeop = null;
+	        	     	case 5: if(richiestaLogout())
+	        	     			{
+	        	     				letteraMenu = 'a';
+	        	     				attualeop = null;
+	        	     			}
+	        	     			else
+	        	     			{
+	        	     				letteraMenu = 'f';
+	        	     			}
 	        	     			break;
 					}
 
